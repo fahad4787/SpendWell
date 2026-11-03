@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -78,6 +78,56 @@ const App = () => {
     return undefined;
   }, [loading]);
 
+  const readUserProfile = useCallback(async (currentUser) => {
+    if (!currentUser) return { role: null, name: "" };
+
+    let role = UNPROVISIONED_ROLE;
+    let name = currentUser.email?.split("@")[0] || "User";
+
+    try {
+      const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        role = data.role || "admin";
+        name = data.username || name;
+      }
+    } catch {
+      role = UNPROVISIONED_ROLE;
+    }
+
+    return { role, name };
+  }, []);
+
+  const applyAuthUser = useCallback(
+    async (currentUser, { retryUnprovisioned = false } = {}) => {
+      let profile = await readUserProfile(currentUser);
+
+      // Signup: Auth fires before Firestore user doc exists — briefly retry.
+      if (
+        retryUnprovisioned &&
+        currentUser &&
+        profile.role === UNPROVISIONED_ROLE
+      ) {
+        for (let attempt = 0; attempt < 6; attempt += 1) {
+          await new Promise((r) => setTimeout(r, 120 * (attempt + 1)));
+          profile = await readUserProfile(currentUser);
+          if (profile.role !== UNPROVISIONED_ROLE) break;
+        }
+      }
+
+      setUserRole(profile.role);
+      setUserName(profile.name);
+      setUser(currentUser);
+
+      if (profile.role && canAccessExpense(profile.role)) {
+        void import("./pages/Expense");
+      }
+
+      return profile;
+    },
+    [readUserProfile]
+  );
+
   useEffect(() => {
     let generation = 0;
     let initialAuthPass = true;
@@ -88,42 +138,18 @@ const App = () => {
         setLoading(true);
       }
 
-      let role = null;
-      let name = "";
-
-      if (currentUser) {
-        name = currentUser.email?.split("@")[0] || "User";
-        try {
-          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-          if (userDoc.exists()) {
-            const data = userDoc.data();
-            role = data.role || "admin";
-            name = data.username || name;
-          } else {
-            role = UNPROVISIONED_ROLE;
-          }
-        } catch {
-          role = UNPROVISIONED_ROLE;
-        }
-      }
+      await applyAuthUser(currentUser, { retryUnprovisioned: Boolean(currentUser) });
 
       if (request !== generation) return;
-      setUserRole(role);
-      setUserName(name);
-      setUser(currentUser);
       setLoading(false);
       initialAuthPass = false;
-
-      if (role && canAccessExpense(role)) {
-        void import("./pages/Expense");
-      }
     });
 
     return () => {
       generation += 1;
       unsubscribe();
     };
-  }, []);
+  }, [applyAuthUser]);
 
   const handleLogout = async () => {
     try {
@@ -134,8 +160,18 @@ const App = () => {
     }
   };
 
-  const handleRegistered = () => {
+  // After first signup, lock in setup + refresh role so we skip the locked login flash.
+  const handleRegistered = async () => {
     setSetupComplete(true);
+    const currentUser = auth.currentUser;
+    if (!currentUser) return;
+
+    setLoading(true);
+    try {
+      await applyAuthUser(currentUser, { retryUnprovisioned: true });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading || (user && !userRole) || setupComplete === null) {
@@ -177,7 +213,11 @@ const App = () => {
               ) : (
                 <Login
                   onLogin={() => setUser(auth.currentUser)}
-                  lockedMessage="Your account does not have expense access. Sign out and use an expense-enabled user."
+                  onSignedOut={() => {
+                    setUser(null);
+                    setUserRole(null);
+                  }}
+                  lockedMessage="You’re signed in, but this account has no Spendwell role in Firestore yet. Sign out, then add a users profile (role: admin) or finish setup after publishing Firestore rules."
                 />
               )
             }

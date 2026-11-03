@@ -77,7 +77,7 @@ const Signup = ({ setupComplete, onRegistered }) => {
         }
         throw bootErr;
       }
-      onRegistered?.();
+      await onRegistered?.();
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
