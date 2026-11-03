@@ -1,27 +1,27 @@
-// Import the functions you need from the Firebase SDKs
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";  // For Firebase Authentication
-import { getFirestore } from "firebase/firestore";  // For Firestore Database
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Spendwell Firebase web config (client-safe; protect data with Auth + Firestore rules).
+// Env vars override when set — used for both `npm run dev` and `npm run build`.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyBdPWewtKJav8u1miYDZ-fQ_vo5T-FRUrU",
+  authDomain:
+    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "spendwell-37dc4.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "spendwell-37dc4",
+  storageBucket:
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "spendwell-37dc4.firebasestorage.app",
+  messagingSenderId:
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "951408652336",
+  appId:
+    import.meta.env.VITE_FIREBASE_APP_ID || "1:951408652336:web:f64c3b3ee392afe9b0fdf5",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || undefined,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Initialize Firebase services
-const auth = getAuth(app);  // For Authentication
-const db = getFirestore(app);  // For Firestore Database
-
-// Analytics loads after first paint so it stays off the critical path.
 let analytics = null;
 let analyticsPromise = null;
 
@@ -59,5 +59,4 @@ if (typeof window !== "undefined") {
   });
 }
 
-// Export the services to use them in other parts of your app
 export { auth, db, analytics, initAnalytics };

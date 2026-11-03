@@ -13,10 +13,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import Layout from "./Layout";
 import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
 import { AppToastProvider, useAppToast } from "./components/ui/AppToastProvider";
 import AppToastStack from "./components/ui/AppToastStack";
 import AppLoader from "./components/ui/AppLoader";
 import { canAccessExpense, UNPROVISIONED_ROLE } from "./utils/access";
+import { isSetupComplete } from "./utils/bootstrap";
 
 function ToastRenderer() {
   const { toasts, removeToast } = useAppToast();
@@ -40,8 +42,14 @@ function LoadingFallback({ message = "Loading…", variant = "fullPage" }) {
 function resolveBootLoaderVariant() {
   if (typeof window === "undefined") return "fullPage";
   const path = window.location.pathname || "/";
-  // Login refresh / signed-out boot — match auth shell colors
-  if (path === "/login" || path.startsWith("/login/")) return "auth";
+  if (
+    path === "/login" ||
+    path.startsWith("/login/") ||
+    path === "/signup" ||
+    path.startsWith("/signup/")
+  ) {
+    return "auth";
+  }
   return "fullPage";
 }
 
@@ -50,10 +58,21 @@ const App = () => {
   const [userRole, setUserRole] = useState(null);
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [setupComplete, setSetupComplete] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const done = await isSetupComplete();
+      if (!cancelled) setSetupComplete(done);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (loading) return undefined;
-    // Clear boot tint from index.html once the real shell mounts
     document.documentElement.style.background = "";
     document.body.style.background = "";
     return undefined;
@@ -65,8 +84,6 @@ const App = () => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       const request = ++generation;
 
-      // Only block the UI on the first auth resolution — later null/user
-      // changes should not flash a full-page loader over login/app.
       if (initialAuthPass) {
         setLoading(true);
       }
@@ -117,9 +134,16 @@ const App = () => {
     }
   };
 
-  if (loading || (user && !userRole)) {
+  const handleRegistered = () => {
+    setSetupComplete(true);
+  };
+
+  if (loading || (user && !userRole) || setupComplete === null) {
     return <LoadingFallback variant={resolveBootLoaderVariant()} />;
   }
+
+  const needsSetup = setupComplete === false;
+  const authedHome = user && canAccessExpense(userRole);
 
   return (
     <AppToastProvider>
@@ -127,9 +151,26 @@ const App = () => {
         <ToastRenderer />
         <Routes>
           <Route
+            path="/signup"
+            element={
+              needsSetup ? (
+                authedHome ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <Signup setupComplete={false} onRegistered={handleRegistered} />
+                )
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+
+          <Route
             path="/login"
             element={
-              !user ? (
+              needsSetup ? (
+                <Navigate to="/signup" replace />
+              ) : !user ? (
                 <Login onLogin={() => setUser(auth.currentUser)} />
               ) : canAccessExpense(userRole) ? (
                 <Navigate to="/" replace />
@@ -144,10 +185,10 @@ const App = () => {
 
           <Route
             element={
-              user && canAccessExpense(userRole) ? (
+              authedHome ? (
                 <Layout onLogout={handleLogout} userName={userName} />
               ) : (
-                <Navigate to="/login" replace />
+                <Navigate to={needsSetup ? "/signup" : "/login"} replace />
               )
             }
           >
@@ -178,7 +219,15 @@ const App = () => {
             <Route path="expense" element={<Navigate to="/" replace />} />
           </Route>
 
-          <Route path="*" element={<Navigate to={user && canAccessExpense(userRole) ? "/" : "/login"} replace />} />
+          <Route
+            path="*"
+            element={
+              <Navigate
+                to={authedHome ? "/" : needsSetup ? "/signup" : "/login"}
+                replace
+              />
+            }
+          />
         </Routes>
       </Router>
     </AppToastProvider>

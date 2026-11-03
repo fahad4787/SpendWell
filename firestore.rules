@@ -2,26 +2,51 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function bootstrapComplete() {
+      return exists(/databases/$(database)/documents/system/bootstrap)
+        && get(/databases/$(database)/documents/system/bootstrap).data.setupComplete == true;
+    }
+
+    // Public bootstrap flag — readable so the app can show one-time signup.
+    match /system/bootstrap {
+      allow read: if true;
+      allow create: if isSignedIn()
+        && request.resource.data.setupComplete == true
+        && request.resource.data.firstAdminUid == request.auth.uid
+        && !bootstrapComplete();
+      allow update, delete: if false;
+    }
+
     match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
+      allow read: if isSignedIn();
+      // First admin creates self during bootstrap; later writes stay auth-gated.
+      allow create: if isSignedIn()
+        && request.auth.uid == userId
+        && (
+          (!bootstrapComplete() && request.resource.data.role == 'admin')
+          || bootstrapComplete()
+        );
+      allow update, delete: if isSignedIn();
     }
 
     match /expenses/{document} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isSignedIn();
     }
 
-    match /incomes/{document} {
-      allow read, write: if request.auth != null;
+    match /income/{document} {
+      allow read, write: if isSignedIn();
     }
 
-    match /cashTransactions/{document} {
-      allow read, write: if request.auth != null;
+    match /cash_transactions/{document} {
+      allow read, write: if isSignedIn();
     }
 
-    // Keep broad authenticated access for any related finance docs used by import/export.
     match /{collection}/{document} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isSignedIn();
     }
   }
 }
