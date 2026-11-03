@@ -29,15 +29,9 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // Increase limit to 1MB
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     historyApiFallback: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8787',
-        changeOrigin: true,
-      },
-    },
-  }
+  },
 })

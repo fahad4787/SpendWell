@@ -59,4 +59,4 @@ if (typeof window !== "undefined") {
   });
 }
 
-export { auth, db, analytics, initAnalytics };
+export { auth, db };

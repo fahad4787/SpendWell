@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { auth } from "../../firebase";
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth";
 import { Form, Alert, Spinner, Modal } from "react-bootstrap";
 import AuthLayout from "../../Layout/AuthLayout";
 import AuthCard from "../Auth/AuthCard";
 import PasswordField from "../Auth/PasswordField";
 import AppButton from "../ui/AppButton";
 
-const Login = ({ onLogin, lockedMessage }) => {
+const Login = ({ onLogin, lockedMessage, onSignedOut }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -92,6 +92,25 @@ const Login = ({ onLogin, lockedMessage }) => {
             {error}
           </Alert>
         ) : null}
+        {lockedMessage ? (
+          <AppButton
+            tone="primary"
+            type="button"
+            block
+            className="mt-2"
+            onClick={async () => {
+              try {
+                await signOut(auth);
+                onSignedOut?.();
+              } catch (err) {
+                setError(err?.message || "Unable to sign out.");
+              }
+            }}
+          >
+            Sign out
+          </AppButton>
+        ) : null}
+        {!lockedMessage ? (
         <Form onSubmit={handleLogin}>
           <Form.Group className="form-group" controlId="login-email">
             <Form.Label>Email address</Form.Label>
@@ -146,6 +165,7 @@ const Login = ({ onLogin, lockedMessage }) => {
             </button>
           </div>
         </Form>
+        ) : null}
       </AuthCard>
 
       <Modal show={showResetModal} onHide={handleCloseResetModal} centered className="app-modal auth-reset-modal">

@@ -2,7 +2,7 @@
  * Financial Management period helpers (YYYY-MM-DD strings).
  */
 
-export function endOfMonthIso(fromYmd) {
+function endOfMonthIso(fromYmd) {
   const d = new Date(`${fromYmd}T12:00:00`);
   if (Number.isNaN(d.getTime())) return fromYmd;
   const last = new Date(d.getFullYear(), d.getMonth() + 1, 0);
@@ -19,19 +19,6 @@ export function defaultExpenseRange() {
   const m = String(now.getMonth() + 1).padStart(2, "0");
   const start = `${y}-${m}-01`;
   return { rangeStart: start, rangeEnd: endOfMonthIso(start) };
-}
-
-export function monthLabelFromYmd(ymd) {
-  if (!ymd) return "";
-  const d = new Date(`${ymd}T12:00:00`);
-  if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-}
-
-export function formatExpenseRangeLabel(start, end) {
-  if (!start || !end) return "";
-  if (start === end) return start;
-  return `${start} → ${end}`;
 }
 
 export function formatExpenseRangeLabelDisplay(start, end) {

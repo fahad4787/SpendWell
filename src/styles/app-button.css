@@ -115,20 +115,6 @@
   font-size: 0.9rem;
 }
 
-.app-btn--lg {
-  min-height: 48px;
-  padding: 0.7rem 1.35rem;
-  font-size: 1rem;
-}
-
-.app-btn--icon {
-  width: 36px;
-  min-width: 36px;
-  height: 36px;
-  min-height: 36px;
-  padding: 0;
-}
-
 .app-btn--block {
   width: 100%;
 }
@@ -193,24 +179,6 @@
   --app-btn-fill: #7f1d1d;
   --app-btn-hover-color: #fff;
   --app-btn-hover-border: #7f1d1d;
-}
-
-.app-btn--outline-primary {
-  --app-btn-bg: transparent;
-  --app-btn-border: var(--charcoal);
-  --app-btn-color: var(--charcoal);
-  --app-btn-fill: var(--lime);
-  --app-btn-hover-color: var(--charcoal);
-  --app-btn-hover-border: var(--charcoal);
-}
-
-.app-btn--outline-danger {
-  --app-btn-bg: transparent;
-  --app-btn-border: var(--negative);
-  --app-btn-color: var(--negative);
-  --app-btn-fill: var(--negative);
-  --app-btn-hover-color: #fff;
-  --app-btn-hover-border: var(--negative);
 }
 
 .app-btn--ghost {

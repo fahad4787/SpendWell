@@ -1,9 +1,9 @@
 import { doc, getDoc, runTransaction, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const BOOTSTRAP_DOC_PATH = ["system", "bootstrap"];
+const BOOTSTRAP_DOC_PATH = ["system", "bootstrap"];
 
-export function bootstrapDocRef() {
+function bootstrapDocRef() {
   return doc(db, ...BOOTSTRAP_DOC_PATH);
 }
 

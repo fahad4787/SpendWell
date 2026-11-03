@@ -24,7 +24,7 @@ export const EXPENSE_VIEWS = [
   },
 ];
 
-export const DEFAULT_EXPENSE_VIEW = "summary";
+const DEFAULT_EXPENSE_VIEW = "summary";
 
 export function normalizeExpenseView(value) {
   const key = String(value || "").toLowerCase();

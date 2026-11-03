@@ -1,20 +1,11 @@
 import React from "react";
 
-const TONES = new Set([
-  "primary",
-  "secondary",
-  "danger",
-  "outline-primary",
-  "outline-danger",
-  "ghost",
-]);
+const TONES = new Set(["primary", "secondary", "danger", "ghost"]);
 
 const SIZES = {
   xs: "app-btn--xs",
   sm: "app-btn--sm",
   md: "app-btn--md",
-  lg: "app-btn--lg",
-  icon: "app-btn--icon",
 };
 
 /**
