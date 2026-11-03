@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, lazy } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -57,7 +57,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [userName, setUserName] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [booting, setBooting] = useState(true);
   const [setupComplete, setSetupComplete] = useState(null);
 
   useEffect(() => {
@@ -72,11 +72,11 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (loading) return undefined;
+    if (booting) return undefined;
     document.documentElement.style.background = "";
     document.body.style.background = "";
     return undefined;
-  }, [loading]);
+  }, [booting]);
 
   const readUserProfile = useCallback(async (currentUser) => {
     if (!currentUser) return { role: null, name: "" };
@@ -102,7 +102,6 @@ const App = () => {
     async (currentUser, { retryUnprovisioned = false } = {}) => {
       let profile = await readUserProfile(currentUser);
 
-      // Signup: Auth fires before Firestore user doc exists — briefly retry.
       if (
         retryUnprovisioned &&
         currentUser &&
@@ -130,19 +129,11 @@ const App = () => {
 
   useEffect(() => {
     let generation = 0;
-    let initialAuthPass = true;
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       const request = ++generation;
-
-      if (initialAuthPass) {
-        setLoading(true);
-      }
-
       await applyAuthUser(currentUser, { retryUnprovisioned: Boolean(currentUser) });
-
       if (request !== generation) return;
-      setLoading(false);
-      initialAuthPass = false;
+      setBooting(false);
     });
 
     return () => {
@@ -160,26 +151,20 @@ const App = () => {
     }
   };
 
-  // After first signup, lock in setup + refresh role so we skip the locked login flash.
+  // Keep the router mounted — flipping a full-page loader here blanked the app after signup.
   const handleRegistered = async () => {
     setSetupComplete(true);
     const currentUser = auth.currentUser;
-    if (!currentUser) return;
-
-    setLoading(true);
-    try {
-      await applyAuthUser(currentUser, { retryUnprovisioned: true });
-    } finally {
-      setLoading(false);
-    }
+    if (!currentUser) return null;
+    return applyAuthUser(currentUser, { retryUnprovisioned: true });
   };
 
-  if (loading || (user && !userRole) || setupComplete === null) {
+  if (booting || setupComplete === null) {
     return <LoadingFallback variant={resolveBootLoaderVariant()} />;
   }
 
   const needsSetup = setupComplete === false;
-  const authedHome = user && canAccessExpense(userRole);
+  const authedHome = Boolean(user && canAccessExpense(userRole));
 
   return (
     <AppToastProvider>
@@ -196,7 +181,7 @@ const App = () => {
                   <Signup setupComplete={false} onRegistered={handleRegistered} />
                 )
               ) : (
-                <Navigate to="/login" replace />
+                <Navigate to={authedHome ? "/" : "/login"} replace />
               )
             }
           />
@@ -236,7 +221,9 @@ const App = () => {
               index
               element={
                 <ProtectedRoute user={user} userRole={userRole}>
-                  <Expense />
+                  <Suspense fallback={<LoadingFallback message="Loading…" variant="inline" />}>
+                    <Expense />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -244,7 +231,9 @@ const App = () => {
               path="transactions"
               element={
                 <ProtectedRoute user={user} userRole={userRole}>
-                  <Expense />
+                  <Suspense fallback={<LoadingFallback message="Loading…" variant="inline" />}>
+                    <Expense />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
@@ -252,7 +241,9 @@ const App = () => {
               path="cash"
               element={
                 <ProtectedRoute user={user} userRole={userRole}>
-                  <Expense />
+                  <Suspense fallback={<LoadingFallback message="Loading…" variant="inline" />}>
+                    <Expense />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />

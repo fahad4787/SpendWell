@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { Form, Alert } from "react-bootstrap";
 import { auth } from "../../firebase";
@@ -10,6 +10,7 @@ import PasswordField from "../Auth/PasswordField";
 import AppButton from "../ui/AppButton";
 
 const Signup = ({ setupComplete, onRegistered }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -78,6 +79,7 @@ const Signup = ({ setupComplete, onRegistered }) => {
         throw bootErr;
       }
       await onRegistered?.();
+      navigate("/", { replace: true });
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
