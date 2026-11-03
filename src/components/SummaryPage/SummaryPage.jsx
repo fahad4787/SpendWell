@@ -57,28 +57,13 @@ const formatCompactPk = (v) => {
   return String(Math.round(n));
 };
 
-const JULY_2025 = '2025-07';
-const JULY_START_BALANCE = 57010;
-
 // Helper functions
-const isSameMonth = (dateStr, selectedMonth) => {
-  const d = new Date(dateStr);
-  const [year, month] = selectedMonth.split('-').map(Number);
-  return d.getFullYear() === year && (d.getMonth() + 1) === month;
-};
-
 const isBeforeMonth = (dateStr, monthStr) => {
   const [year, month] = monthStr.split('-').map(Number);
   const d = new Date(dateStr);
   const itemYear = d.getFullYear();
   const itemMonth = d.getMonth() + 1;
   return itemYear < year || (itemYear === year && itemMonth < month);
-};
-
-const getPreviousMonth = (monthStr) => {
-  const [year, month] = monthStr.split('-').map(Number);
-  const prevDate = new Date(year, month - 2, 1);
-  return `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`;
 };
 
 const calculateMonthTotals = (transactions) => {
@@ -472,43 +457,15 @@ const SummaryPage = ({ rangeStart, rangeEnd, refreshKey, onHasData }) => {
       setIncomeData(filteredIncome);
       setExpenseData(filteredExpenses);
 
-      // Calculate month net balance recursively (cash-book expenses excluded from P&L)
-      const calculateMonthNetBalance = (monthStr) => {
-        if (monthStr === JULY_2025) {
-          const julyIncome = allIncomeData.filter((item) => isSameMonth(item.date, monthStr));
-          const julyExpenses = allExpensesPnl.filter((item) => isSameMonth(item.date, monthStr));
-          return JULY_START_BALANCE + (calculateMonthTotals(julyIncome) - calculateMonthTotals(julyExpenses));
-        } else if (monthStr > JULY_2025) {
-          const prevMonthStr = getPreviousMonth(monthStr);
-          const prevMonthNetBalance = calculateMonthNetBalance(prevMonthStr);
-          
-          const currentIncome = allIncomeData.filter((item) => isSameMonth(item.date, monthStr));
-          const currentExpenses = allExpensesPnl.filter((item) => isSameMonth(item.date, monthStr));
-          
-          return prevMonthNetBalance + (calculateMonthTotals(currentIncome) - calculateMonthTotals(currentExpenses));
-        } else {
-          const previousIncome = allIncomeData.filter(item => isBeforeMonth(item.date, monthStr));
-          const previousExpenses = allExpensesPnl.filter(item => isBeforeMonth(item.date, monthStr));
-          return calculateMonthTotals(previousIncome) - calculateMonthTotals(previousExpenses);
-        }
-      };
-
-      // Calculate start balance
-      let startBalance = 0;
-      if (referenceMonth === JULY_2025) {
-        startBalance = JULY_START_BALANCE;
-      } else if (referenceMonth > JULY_2025) {
-        const prevMonthStr = getPreviousMonth(referenceMonth);
-        startBalance = calculateMonthNetBalance(prevMonthStr);
-      } else {
-        const previousIncome = allIncomeData.filter((item) =>
-          isBeforeMonth(item.date, referenceMonth)
-        );
-        const previousExpenses = allExpensesPnl.filter((item) =>
-          isBeforeMonth(item.date, referenceMonth)
-        );
-        startBalance = calculateMonthTotals(previousIncome) - calculateMonthTotals(previousExpenses);
-      }
+      // Start balance = all P&L activity before the selected period (no hardcoded seed).
+      const previousIncome = allIncomeData.filter((item) =>
+        isBeforeMonth(item.date, referenceMonth)
+      );
+      const previousExpenses = allExpensesPnl.filter((item) =>
+        isBeforeMonth(item.date, referenceMonth)
+      );
+      const startBalance =
+        calculateMonthTotals(previousIncome) - calculateMonthTotals(previousExpenses);
 
       // Calculate current month statistics (bank / non-cash expenses only for P&L)
       const totalIncome = calculateMonthTotals(filteredIncome);
