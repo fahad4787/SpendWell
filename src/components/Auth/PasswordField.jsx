@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import AppButton from "../ui/AppButton";
 
 const PasswordField = ({
   value,
@@ -16,7 +15,7 @@ const PasswordField = ({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <InputGroup>
+    <div className="password-field">
       <Form.Control
         id={id}
         name={name}
@@ -27,20 +26,20 @@ const PasswordField = ({
         required={required}
         disabled={disabled}
         autoComplete={autoComplete}
+        className="password-field__input"
       />
-      <AppButton
-        tone="ghost"
-        size="icon"
-        onClick={() => setShowPassword((v) => !v)}
-        className="password-toggle"
+      <button
         type="button"
+        className="password-field__toggle"
+        onClick={() => setShowPassword((v) => !v)}
         disabled={disabled}
         aria-label={showPassword ? "Hide password" : "Show password"}
         aria-pressed={showPassword}
+        tabIndex={-1}
       >
         {showPassword ? <FaEyeSlash aria-hidden="true" /> : <FaEye aria-hidden="true" />}
-      </AppButton>
-    </InputGroup>
+      </button>
+    </div>
   );
 };
 

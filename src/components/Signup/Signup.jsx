@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { Form, Alert } from "react-bootstrap";
 import { auth } from "../../firebase";
@@ -162,13 +162,6 @@ const Signup = ({ setupComplete, onRegistered }) => {
           >
             Create admin account
           </AppButton>
-
-          <div className="auth-panel__footer">
-            <span className="text-muted small">Already set up? </span>
-            <Link to="/login" className="auth-panel__link">
-              Sign in
-            </Link>
-          </div>
         </Form>
       </AuthCard>
     </AuthLayout>
