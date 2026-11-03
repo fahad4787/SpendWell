@@ -1,0 +1,327 @@
+/* Add / Edit transaction modal — consistent fields */
+
+.transaction-modal.add-transaction-modal .add-transaction-modal-body {
+  padding: 1.1rem 1.25rem 0.35rem;
+}
+
+.transaction-modal.add-transaction-modal .add-transaction-modal-fields {
+  --tx-field-h: 40px;
+}
+
+.transaction-modal.add-transaction-modal .form-group {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.transaction-modal.add-transaction-modal .form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0 !important;
+}
+
+.transaction-modal .tx-modal-label-note {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--muted);
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+}
+
+/* Type switch */
+.transaction-modal .tx-modal-type {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.transaction-modal .tx-modal-type__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.transaction-modal .tx-modal-type__switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--off-white);
+}
+
+.transaction-modal .tx-modal-type__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.transaction-modal .tx-modal-type__btn svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+}
+
+.transaction-modal .tx-modal-type__btn:hover {
+  color: var(--charcoal);
+}
+
+.transaction-modal .tx-modal-type__btn--expense.is-active {
+  background: #fff;
+  color: var(--negative);
+  box-shadow: 0 1px 2px rgba(23, 23, 23, 0.08);
+}
+
+.transaction-modal .tx-modal-type__btn--income.is-active {
+  background: #fff;
+  color: var(--positive);
+  box-shadow: 0 1px 2px rgba(23, 23, 23, 0.08);
+}
+
+/* Shared control chrome */
+.transaction-modal.add-transaction-modal .form-control,
+.transaction-modal.add-transaction-modal .form-select {
+  height: var(--tx-field-h) !important;
+  min-height: var(--tx-field-h) !important;
+  padding: 0.45rem 0.75rem !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--charcoal) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500;
+  box-shadow: none !important;
+  line-height: 1.25;
+}
+
+.transaction-modal.add-transaction-modal textarea.form-control {
+  height: auto !important;
+  min-height: 6rem !important;
+  padding: 0.7rem 0.75rem !important;
+  resize: vertical;
+}
+
+.transaction-modal.add-transaction-modal .form-control:focus,
+.transaction-modal.add-transaction-modal .form-select:focus {
+  border-color: var(--charcoal) !important;
+  box-shadow: 0 0 0 3px rgba(184, 243, 75, 0.22) !important;
+  background: #fff !important;
+}
+
+.transaction-modal.add-transaction-modal .form-control.is-invalid,
+.transaction-modal.add-transaction-modal .form-select.is-invalid {
+  border-color: var(--negative) !important;
+}
+
+.transaction-modal.add-transaction-modal .tx-modal-datepicker.ant-picker,
+.transaction-modal.add-transaction-modal .ant-picker {
+  width: 100% !important;
+  height: var(--tx-field-h) !important;
+  min-height: var(--tx-field-h) !important;
+  padding: 0 0.75rem !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.transaction-modal.add-transaction-modal .ant-picker-focused,
+.transaction-modal.add-transaction-modal .ant-picker:hover {
+  border-color: var(--charcoal) !important;
+}
+
+.transaction-modal.add-transaction-modal .ant-picker-focused {
+  box-shadow: 0 0 0 3px rgba(184, 243, 75, 0.22) !important;
+}
+
+.transaction-modal.add-transaction-modal .ant-picker-input > input {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--charcoal) !important;
+}
+
+/* Category + add */
+.transaction-modal .category-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.transaction-modal .category-input-group .form-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-modal .category-input-group .add-category-btn {
+  flex: 0 0 var(--tx-field-h);
+  width: var(--tx-field-h);
+  height: var(--tx-field-h);
+  min-height: var(--tx-field-h);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.transaction-modal .category-input-group .add-category-btn svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.transaction-modal .category-input-group .add-category-btn:hover,
+.transaction-modal .category-input-group .add-category-btn.is-open {
+  background: var(--lime-tint);
+  border-color: var(--lime);
+}
+
+.transaction-modal .add-category-section {
+  margin-top: 0.55rem;
+  padding: 0.7rem;
+  border-radius: 8px;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+}
+
+.transaction-modal .add-category-section__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.transaction-modal .add-category-section__color {
+  width: 7.5rem;
+  flex: 0 0 auto;
+}
+
+/* Payment method — same rhythm as type switch */
+.transaction-modal .tx-modal-pay {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--off-white);
+}
+
+.transaction-modal .tx-modal-pay__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 36px;
+  margin: 0;
+  padding: 0 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.transaction-modal .tx-modal-pay__btn svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+}
+
+.transaction-modal .tx-modal-pay__btn:hover {
+  color: var(--charcoal);
+}
+
+.transaction-modal .tx-modal-pay__btn.is-active {
+  background: #fff;
+  color: var(--charcoal);
+  box-shadow: 0 1px 2px rgba(23, 23, 23, 0.08);
+}
+
+.transaction-modal.add-transaction-modal .modal-footer .app-btn {
+  min-height: 36px;
+  border-radius: 8px;
+}
+
+.transaction-modal .tx-modal-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.transaction-modal .add-transaction-modal-body {
+  position: relative;
+}
+
+.transaction-modal .add-transaction-modal-body.is-saving .add-transaction-modal-form {
+  opacity: 0.45;
+  pointer-events: none;
+  filter: saturate(0.85);
+}
+
+.transaction-modal .tx-modal-saving {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  background: rgba(245, 245, 240, 0.72);
+  backdrop-filter: blur(2px);
+  color: var(--charcoal);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.transaction-modal .tx-modal-saving__spinner {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  border: 2.5px solid var(--charcoal);
+  border-right-color: var(--lime);
+  animation: tx-modal-spin 0.7s linear infinite;
+}
+
+@keyframes tx-modal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transaction-modal .tx-modal-saving__spinner,
+  .app-btn__spinner {
+    animation: none;
+  }
+}

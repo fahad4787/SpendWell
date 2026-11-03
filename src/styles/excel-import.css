@@ -1,0 +1,20 @@
+.excel-file-input-hidden {
+  display: none;
+}
+
+.excel-upload-button {
+  min-width: 138px;
+  white-space: nowrap;
+  border-style: dashed !important;
+  border-width: 1.5px !important;
+  background: var(--emerald-tint) !important;
+}
+
+.excel-upload-button:hover {
+  background: var(--emerald-tint) !important;
+}
+
+.excel-progress-wrap {
+  max-width: 520px;
+  margin-top: 0.75rem;
+}

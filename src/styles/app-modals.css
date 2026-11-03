@@ -1,0 +1,305 @@
+/* Shared Spendwell modals — light, charcoal/lime */
+
+.app-modal .modal-content,
+.transaction-modal .modal-content,
+.excel-import-modal .modal-content,
+.category-transaction-modal .modal-content,
+.auth-reset-modal .modal-content {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(23, 23, 23, 0.14);
+}
+
+.app-modal .modal-content::before,
+.transaction-modal .modal-content::before,
+.excel-import-modal .modal-content::before,
+.category-transaction-modal .modal-content::before,
+.auth-reset-modal .modal-content::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--charcoal);
+  z-index: 2;
+}
+
+.app-modal--danger .modal-content::before {
+  background: var(--negative);
+}
+
+.app-modal .modal-header,
+.transaction-modal .modal-header,
+.excel-import-modal .modal-header,
+.category-transaction-modal .modal-header,
+.auth-reset-modal .modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  color: var(--charcoal);
+  padding: 1rem 1.25rem 0.9rem;
+}
+
+.app-modal .modal-title,
+.transaction-modal .modal-title,
+.excel-import-modal .modal-title,
+.category-transaction-modal .modal-title,
+.auth-reset-modal .modal-title,
+.app-modal .modal-header .modal-title,
+.transaction-modal .modal-header .modal-title,
+.excel-import-modal .modal-header .modal-title,
+.category-transaction-modal .modal-header .modal-title,
+.auth-reset-modal .modal-header .modal-title {
+  color: var(--charcoal) !important;
+  font-weight: 750;
+  font-size: 1rem;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.app-modal .modal-header .btn-close,
+.transaction-modal .modal-header .btn-close,
+.excel-import-modal .modal-header .btn-close,
+.category-transaction-modal .modal-header .btn-close,
+.auth-reset-modal .modal-header .btn-close {
+  filter: none;
+  opacity: 0.55;
+  box-shadow: none;
+  transition: opacity 0.15s ease;
+}
+
+.app-modal .modal-header .btn-close:hover,
+.transaction-modal .modal-header .btn-close:hover,
+.excel-import-modal .modal-header .btn-close:hover,
+.category-transaction-modal .modal-header .btn-close:hover,
+.auth-reset-modal .modal-header .btn-close:hover {
+  opacity: 1;
+}
+
+.app-modal .modal-body,
+.transaction-modal .modal-body,
+.excel-import-modal .modal-body,
+.category-transaction-modal .modal-body,
+.auth-reset-modal .modal-body {
+  padding: 1.15rem 1.25rem 1.25rem;
+  background: #fff;
+  color: var(--charcoal);
+}
+
+.app-modal .modal-footer,
+.transaction-modal .modal-footer,
+.excel-import-modal .modal-footer,
+.category-transaction-modal .modal-footer,
+.auth-reset-modal .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--off-white);
+  padding: 0.85rem 1.25rem;
+}
+
+.app-modal .form-label,
+.transaction-modal .form-label,
+.excel-import-modal .form-label,
+.category-transaction-modal .form-label,
+.auth-reset-modal .form-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.app-modal .form-control,
+.app-modal .form-select,
+.transaction-modal .form-control,
+.transaction-modal .form-select,
+.excel-import-modal .form-control,
+.excel-import-modal .form-select,
+.category-transaction-modal .form-control,
+.category-transaction-modal .form-select,
+.auth-reset-modal .form-control,
+.auth-reset-modal .form-select {
+  min-height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  width: 100%;
+  color: var(--charcoal);
+  background: #fff;
+}
+
+.app-modal .form-control:focus,
+.app-modal .form-select:focus,
+.transaction-modal .form-control:focus,
+.transaction-modal .form-select:focus,
+.excel-import-modal .form-control:focus,
+.excel-import-modal .form-select:focus,
+.category-transaction-modal .form-control:focus,
+.category-transaction-modal .form-select:focus,
+.auth-reset-modal .form-control:focus,
+.auth-reset-modal .form-select:focus {
+  border-color: var(--charcoal);
+  box-shadow: 0 0 0 3px rgba(184, 243, 75, 0.22);
+}
+
+.app-modal .form-control:disabled,
+.app-modal .form-control[readonly],
+.app-modal .form-select:disabled,
+.app-modal .form-select[readonly],
+.transaction-modal .form-control:disabled,
+.transaction-modal .form-control[readonly],
+.transaction-modal .form-select:disabled,
+.transaction-modal .form-select[readonly],
+.excel-import-modal .form-control:disabled,
+.excel-import-modal .form-control[readonly],
+.excel-import-modal .form-select:disabled,
+.excel-import-modal .form-select[readonly],
+.category-transaction-modal .form-control:disabled,
+.category-transaction-modal .form-control[readonly],
+.category-transaction-modal .form-select:disabled,
+.category-transaction-modal .form-select[readonly],
+.auth-reset-modal .form-control:disabled,
+.auth-reset-modal .form-control[readonly],
+.auth-reset-modal .form-select:disabled,
+.auth-reset-modal .form-select[readonly] {
+  background: var(--off-white);
+  color: var(--muted);
+}
+
+.app-modal .form-group,
+.transaction-modal .form-group,
+.excel-import-modal .form-group,
+.category-transaction-modal .form-group,
+.auth-reset-modal .form-group {
+  width: 100%;
+}
+
+.app-modal .form-text,
+.app-modal .app-modal__hint,
+.transaction-modal .form-text,
+.transaction-modal .app-modal__hint,
+.excel-import-modal .form-text,
+.excel-import-modal .app-modal__hint,
+.category-transaction-modal .form-text,
+.category-transaction-modal .app-modal__hint,
+.auth-reset-modal .form-text,
+.auth-reset-modal .app-modal__hint {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.app-modal .app-modal__hint,
+.transaction-modal .app-modal__hint,
+.excel-import-modal .app-modal__hint,
+.category-transaction-modal .app-modal__hint,
+.auth-reset-modal .app-modal__hint {
+  margin: 0 0 1rem;
+}
+
+.app-modal .alert,
+.transaction-modal .alert,
+.excel-import-modal .alert,
+.category-transaction-modal .alert,
+.auth-reset-modal .alert {
+  border-radius: 8px;
+  font-size: 0.84rem;
+}
+
+/* Confirm / detail cards inside modals */
+.app-modal__detail {
+  margin-top: 0.85rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--off-white);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.app-modal__detail-row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.5rem;
+  align-items: start;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.app-modal__detail-label {
+  color: var(--muted);
+  font-weight: 650;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 0.1rem;
+}
+
+.app-modal__detail-value {
+  color: var(--charcoal);
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.app-modal__lead {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--charcoal);
+  line-height: 1.45;
+}
+
+.app-modal--danger .app-modal__lead {
+  color: var(--charcoal);
+}
+
+.excel-import-modal .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.category-transaction-modal .modal-title small {
+  color: var(--muted) !important;
+  font-weight: 550;
+}
+
+.app-modal--date .modal-content,
+.app-modal--date .modal-body {
+  overflow: visible;
+}
+
+/* Tone down page-local modal header overrides that fight the shared system */
+.transaction-page .modal-header,
+.cash-in-hand-page .modal-header {
+  background: #fff !important;
+  color: var(--charcoal) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.transaction-page .modal-header .modal-title,
+.transaction-page .modal-header h1,
+.transaction-page .modal-header h2,
+.transaction-page .modal-header h3,
+.transaction-page .modal-header h4,
+.transaction-page .modal-header h5,
+.transaction-page .modal-header h6,
+.cash-in-hand-page .modal-header .modal-title,
+.cash-in-hand-page .modal-header h1,
+.cash-in-hand-page .modal-header h2,
+.cash-in-hand-page .modal-header h3,
+.cash-in-hand-page .modal-header h4,
+.cash-in-hand-page .modal-header h5,
+.cash-in-hand-page .modal-header h6 {
+  color: var(--charcoal) !important;
+}
+
+.transaction-page .modal-header .btn-close,
+.cash-in-hand-page .modal-header .btn-close {
+  filter: none !important;
+}

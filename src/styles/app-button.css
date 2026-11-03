@@ -1,0 +1,241 @@
+.app-btn {
+  --app-btn-bg: var(--lime);
+  --app-btn-border: var(--lime);
+  --app-btn-color: var(--charcoal);
+  --app-btn-fill: var(--charcoal);
+  --app-btn-hover-color: var(--lime);
+  --app-btn-hover-border: var(--charcoal);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+  border: 1.5px solid var(--app-btn-border);
+  border-radius: var(--radius);
+  background: var(--app-btn-bg);
+  color: var(--app-btn-color);
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color 0.28s ease,
+    border-color 0.28s ease,
+    opacity 0.2s ease;
+}
+
+.app-btn__content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: color 0.28s ease;
+}
+
+/* Ink fill — wipes left → right, no jump */
+.app-btn__shine,
+.app-btn__fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--app-btn-fill);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app-btn svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+}
+
+.app-btn__spinner {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  flex-shrink: 0;
+  animation: app-btn-spin 0.7s linear infinite;
+}
+
+.app-btn.is-loading {
+  cursor: progress;
+}
+
+@keyframes app-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sizes */
+.app-btn--xs {
+  min-height: 30px;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.72rem;
+  gap: 0.35rem;
+  font-weight: 650;
+}
+
+.app-btn--xs svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.app-btn--xs .app-btn__content {
+  gap: 0.35rem;
+}
+
+.app-btn--sm {
+  min-height: 34px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.75rem;
+}
+
+.app-btn--sm svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.app-btn--md {
+  min-height: 42px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.9rem;
+}
+
+.app-btn--lg {
+  min-height: 48px;
+  padding: 0.7rem 1.35rem;
+  font-size: 1rem;
+}
+
+.app-btn--icon {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+}
+
+.app-btn--block {
+  width: 100%;
+}
+
+.app-btn:hover:not(:disabled):not(.disabled) {
+  color: var(--app-btn-hover-color);
+  border-color: var(--app-btn-hover-border);
+}
+
+.app-btn:hover:not(:disabled):not(.disabled) .app-btn__shine,
+.app-btn:hover:not(:disabled):not(.disabled) .app-btn__fill {
+  transform: scaleX(1);
+}
+
+.app-btn:active:not(:disabled):not(.disabled) .app-btn__shine,
+.app-btn:active:not(:disabled):not(.disabled) .app-btn__fill {
+  transition-duration: 0.16s;
+}
+
+.app-btn:focus,
+.app-btn:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.app-btn:disabled,
+.app-btn.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.app-btn:disabled .app-btn__shine,
+.app-btn:disabled .app-btn__fill,
+.app-btn.disabled .app-btn__shine,
+.app-btn.disabled .app-btn__fill {
+  display: none;
+}
+
+/* Tones — fill inverts into the accent */
+.app-btn--primary {
+  --app-btn-bg: var(--lime);
+  --app-btn-border: var(--lime);
+  --app-btn-color: var(--charcoal);
+  --app-btn-fill: var(--charcoal);
+  --app-btn-hover-color: var(--lime);
+  --app-btn-hover-border: var(--charcoal);
+}
+
+.app-btn--secondary {
+  --app-btn-bg: var(--charcoal);
+  --app-btn-border: var(--charcoal);
+  --app-btn-color: #fff;
+  --app-btn-fill: var(--lime);
+  --app-btn-hover-color: var(--charcoal);
+  --app-btn-hover-border: var(--lime);
+}
+
+.app-btn--danger {
+  --app-btn-bg: var(--negative);
+  --app-btn-border: var(--negative);
+  --app-btn-color: #fff;
+  --app-btn-fill: #7f1d1d;
+  --app-btn-hover-color: #fff;
+  --app-btn-hover-border: #7f1d1d;
+}
+
+.app-btn--outline-primary {
+  --app-btn-bg: transparent;
+  --app-btn-border: var(--charcoal);
+  --app-btn-color: var(--charcoal);
+  --app-btn-fill: var(--lime);
+  --app-btn-hover-color: var(--charcoal);
+  --app-btn-hover-border: var(--charcoal);
+}
+
+.app-btn--outline-danger {
+  --app-btn-bg: transparent;
+  --app-btn-border: var(--negative);
+  --app-btn-color: var(--negative);
+  --app-btn-fill: var(--negative);
+  --app-btn-hover-color: #fff;
+  --app-btn-hover-border: var(--negative);
+}
+
+.app-btn--ghost {
+  --app-btn-bg: #fff;
+  --app-btn-border: var(--border);
+  --app-btn-color: var(--charcoal);
+  --app-btn-fill: var(--lime-tint);
+  --app-btn-hover-color: var(--charcoal);
+  --app-btn-hover-border: var(--lime);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-btn,
+  .app-btn__shine,
+  .app-btn__fill {
+    transition: none !important;
+  }
+
+  .app-btn:hover:not(:disabled):not(.disabled) .app-btn__shine,
+  .app-btn:hover:not(:disabled):not(.disabled) .app-btn__fill {
+    transform: none;
+    opacity: 1;
+  }
+
+  .app-btn:hover:not(:disabled):not(.disabled) {
+    background: var(--app-btn-fill);
+  }
+}

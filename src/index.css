@@ -1,0 +1,308 @@
+/* Spendwell — Charcoal & Lime finance theme.
+   Skip Preflight so Bootstrap forms/modals keep working. */
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --font-display: "Geist", "Inter", system-ui, sans-serif;
+  --font-body: "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: var(--font-body);
+
+  --color-charcoal: #171717;
+  --color-lime: #b8f34b;
+  --color-off-white: #f5f5f0;
+  --color-midnight: #171717;
+  --color-emerald: #b8f34b;
+  --color-soft-white: #f5f5f0;
+  --color-ground: #f5f5f0;
+  --color-surface: #ffffff;
+  --color-raised: #efefe9;
+  --color-border: #e4e4de;
+  --color-rule: #efefe9;
+  --color-ink: #171717;
+  --color-muted: #6b6b66;
+  --color-accent: #b8f34b;
+  --color-chart: #b8f34b;
+  --color-positive: #4d7c0f;
+  --color-negative: #dc2626;
+  --color-primary: #b8f34b;
+  --color-primary-hover: #a6de3a;
+  --color-primary-accent: #b8f34b;
+  --color-primary-tint: #eef8d4;
+  --color-shell: #f5f5f0;
+
+  --radius: 12px;
+  --radius-card: 12px;
+  --radius-control: 12px;
+  --radius-btn: 12px;
+
+  --spacing-sidebar: 212px;
+  --spacing-header: 3.75rem;
+
+  --text-title: 24px;
+  --text-section: 16px;
+  --text-kpi: 28px;
+  --text-body: 14px;
+  --text-small: 12px;
+}
+
+:root {
+  --font-display: "Geist", "Inter", system-ui, sans-serif;
+  --font-body: "Geist", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  --charcoal: #171717;
+  --lime: #b8f34b;
+  --lime-hover: #a6de3a;
+  --lime-tint: #eef8d4;
+  --off-white: #f5f5f0;
+
+  /* Compat aliases — migrate call sites to charcoal/lime/off-white */
+  --midnight: var(--charcoal);
+  --emerald: var(--lime);
+  --emerald-hover: var(--lime-hover);
+  --emerald-tint: var(--lime-tint);
+  --soft-white: var(--off-white);
+
+  --ground: #f5f5f0;
+  --surface: #ffffff;
+  --raised: #efefe9;
+  --border: #e4e4de;
+  --rule: #efefe9;
+  --text: #171717;
+  --muted: #6b6b66;
+  --accent: #b8f34b;
+  --chart-1: #b8f34b;
+  --chart-2: #171717;
+  --chart-3: #6b6b66;
+  --positive: #4d7c0f;
+  --negative: #dc2626;
+
+  --radius: 12px;
+  --radius-card: var(--radius);
+  --radius-control: var(--radius);
+  --radius-btn: var(--radius);
+  --fs-title: 24px;
+  --fs-section: 16px;
+  --fs-kpi: 28px;
+  --fs-body: 14px;
+  --fs-small: 12px;
+  --sidebar-width: 212px;
+  --header-height: 3.75rem;
+  --shadow-soft: 0 1px 2px rgba(23, 23, 23, 0.04), 0 8px 24px rgba(23, 23, 23, 0.05);
+  --shadow-lift: 0 6px 24px rgba(23, 23, 23, 0.08);
+
+  --bs-primary: #b8f34b;
+  --bs-primary-rgb: 184, 243, 75;
+  --bs-link-color: #171717;
+  --bs-link-color-rgb: 23, 23, 23;
+  --bs-link-hover-color: #4d7c0f;
+  --bs-link-hover-color-rgb: 77, 124, 15;
+  --bs-body-color: #171717;
+  --bs-body-bg: #f5f5f0;
+  --bs-border-color: #e4e4de;
+  --bs-success: #4d7c0f;
+  --bs-danger: #dc2626;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    color: var(--text);
+    background: var(--ground);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(184, 243, 75, 0.35);
+    color: var(--charcoal);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--charcoal);
+    letter-spacing: -0.02em;
+  }
+
+  .tabular-nums,
+  .expense-page-card table td:last-child,
+  .summary-kpi__value,
+  .auth-showcase__metric-value,
+  .app-data-table .amount-cell,
+  .app-data-table td:last-child {
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono), var(--font-body);
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@import "./styles/layout.css" layer(components);
+@import "./styles/auth-layout.css" layer(components);
+@import "./styles/aside.css" layer(components);
+@import "./styles/header.css" layer(components);
+@import "./styles/heading.css" layer(components);
+@import "./styles/auth.css" layer(components);
+@import "./styles/site-logo.css" layer(components);
+@import "./styles/app-button.css" layer(components);
+@import "./styles/app-loader.css" layer(components);
+@import "./styles/app-toast.css" layer(components);
+@import "./styles/expense.css" layer(components);
+@import "./styles/app-modals.css" layer(components);
+@import "./styles/app-date-pickers.css" layer(components);
+@import "./styles/excel-import.css" layer(components);
+@import "./styles/transaction-modal.css" layer(components);
+@import "./styles/cash-in-hand-page.css" layer(components);
+@import "./styles/transaction-page.css" layer(components);
+@import "./styles/summary-page.css" layer(components);
+@import "./styles/app-tables.css" layer(components);
+
+/* Unlayered — beat Bootstrap reboot (ul padding, link blues) */
+.sidebar ul,
+.sidebar ol,
+.sidebar-nav ul {
+  margin: 0;
+  padding: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+a,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--positive);
+}
+
+.text-primary,
+.link-primary {
+  color: var(--charcoal) !important;
+}
+
+.btn-link {
+  color: var(--charcoal) !important;
+  text-decoration: none !important;
+}
+
+.btn-link:hover,
+.btn-link:focus-visible {
+  color: var(--positive) !important;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--lime);
+  --bs-btn-border-color: var(--lime);
+  --bs-btn-color: var(--charcoal);
+  --bs-btn-hover-bg: var(--lime-hover);
+  --bs-btn-hover-border-color: var(--lime-hover);
+  --bs-btn-hover-color: var(--charcoal);
+  --bs-btn-active-bg: var(--lime-hover);
+  --bs-btn-active-border-color: var(--lime-hover);
+  --bs-btn-focus-shadow-rgb: 184, 243, 75;
+}
+
+.table-primary,
+.table-info {
+  --bs-table-bg: var(--lime-tint);
+  --bs-table-color: var(--charcoal);
+  --bs-table-border-color: rgba(184, 243, 75, 0.35);
+  --bs-table-striped-bg: #f4fce8;
+  --bs-table-hover-bg: #eef8d4;
+}
+
+.text-info,
+.text-success {
+  color: var(--positive) !important;
+}
+
+.bg-info,
+.bg-primary {
+  background-color: var(--lime) !important;
+  color: var(--charcoal) !important;
+}
+
+/* One radius — Bootstrap surfaces */
+.card,
+.modal-content,
+.dropdown-menu,
+.alert,
+.form-control,
+.form-select,
+.input-group-text,
+.toast,
+.popover {
+  border-radius: var(--radius) !important;
+}
+
+.modal-content .modal-header {
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+.modal-content .modal-footer {
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.card-header:first-child {
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.card-footer:last-child {
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* Beat Bootstrap .badge (white text / opacity) on category chips */
+.transaction-category-badge {
+  opacity: 1 !important;
+}
+
+.transaction-category-badge--tone-0,
+.transaction-category-badge--tone-6,
+.transaction-category-badge--tone-7 {
+  color: #f5f5f0 !important;
+}
+
+.transaction-category-badge--tone-1,
+.transaction-category-badge--tone-2,
+.transaction-category-badge--tone-3,
+.transaction-category-badge--tone-5 {
+  color: #171717 !important;
+}
+
+.transaction-category-badge--tone-4 {
+  color: #991b1b !important;
+}

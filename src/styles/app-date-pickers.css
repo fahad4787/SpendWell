@@ -1,0 +1,378 @@
+/* Charcoal & Lime — Ant Design date / month / range pickers */
+
+.ant-picker-dropdown {
+  z-index: 3000 !important;
+}
+
+.ant-picker,
+.ant-picker-range {
+  max-width: 100%;
+  border-radius: 8px !important;
+  border-color: var(--border) !important;
+  background: #fff !important;
+  font-family: var(--font-body) !important;
+}
+
+.app-date-picker.ant-picker,
+.app-month-picker.ant-picker {
+  max-width: 100%;
+}
+
+.ant-picker:hover {
+  border-color: rgba(23, 23, 23, 0.28) !important;
+}
+
+.ant-picker .ant-picker-suffix,
+.ant-picker .ant-picker-clear {
+  color: var(--muted);
+}
+
+.ant-picker:hover .ant-picker-suffix,
+.ant-picker:hover .ant-picker-clear {
+  color: var(--charcoal);
+}
+
+.ant-picker-focused,
+.ant-picker-focused:hover {
+  border-color: var(--charcoal) !important;
+  box-shadow: 0 0 0 3px rgba(184, 243, 75, 0.28) !important;
+}
+
+.ant-picker-input > input {
+  color: var(--charcoal) !important;
+  font-weight: 600;
+}
+
+.ant-picker-input > input::placeholder {
+  color: var(--muted) !important;
+  font-weight: 450;
+}
+
+/* Mode segmented control */
+.ant-segmented {
+  padding: 3px !important;
+  background: var(--off-white) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) var(--radius);
+}
+
+.ant-segmented-item {
+  border-radius: var(--radius) var(--radius);
+  color: var(--muted) !important;
+  font-weight: 650 !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
+}
+
+.ant-segmented-item:hover:not(.ant-segmented-item-selected) {
+  color: var(--charcoal) !important;
+}
+
+.ant-segmented-item-selected {
+  background: var(--lime) !important;
+  color: var(--charcoal) !important;
+  box-shadow: none !important;
+}
+
+.ant-segmented-item-selected .ant-segmented-item-label {
+  color: var(--charcoal) !important;
+}
+
+.ant-segmented-thumb {
+  background: var(--lime) !important;
+  border-radius: var(--radius) var(--radius);
+}
+
+/* Calendar panel */
+.ant-picker-panel-container {
+  border-radius: var(--radius) var(--radius);
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 12px 32px rgba(23, 23, 23, 0.12) !important;
+  overflow: hidden;
+}
+
+.ant-picker-header {
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--charcoal) !important;
+}
+
+.ant-picker-header button {
+  color: var(--muted) !important;
+}
+
+.ant-picker-header button:hover {
+  color: var(--charcoal) !important;
+}
+
+.ant-picker-header-view button {
+  color: var(--charcoal) !important;
+  font-weight: 700 !important;
+}
+
+.ant-picker-header-view button:hover {
+  color: var(--positive) !important;
+}
+
+.ant-picker-content th {
+  color: var(--muted) !important;
+  font-weight: 650 !important;
+}
+
+.ant-picker-cell {
+  color: var(--muted);
+}
+
+.ant-picker-cell-in-view {
+  color: var(--charcoal);
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+  background: var(--charcoal) !important;
+  color: var(--lime) !important;
+  border-radius: var(--radius) var(--radius);
+  font-weight: 700;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+  border-color: var(--lime) !important;
+  border-radius: var(--radius) var(--radius);
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-in-range:not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end) .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-hover .ant-picker-cell-inner {
+  background: var(--lime-tint) !important;
+  color: var(--charcoal) !important;
+}
+
+.ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-disabled) .ant-picker-cell-inner {
+  background: var(--off-white) !important;
+  border-radius: var(--radius) var(--radius);
+}
+
+.ant-picker-now-btn {
+  color: var(--charcoal) !important;
+  font-weight: 650 !important;
+}
+
+.ant-picker-now-btn:hover {
+  color: var(--positive) !important;
+}
+
+.app-week-picker__day--in-week {
+  background: var(--lime-tint) !important;
+  color: var(--charcoal) !important;
+  border-radius: var(--radius);
+}
+
+.ant-picker-cell-selected .app-week-picker__day--in-week,
+.ant-picker-cell-in-view.ant-picker-cell-selected .app-week-picker__day--in-week {
+  background: var(--charcoal) !important;
+  color: var(--lime) !important;
+}
+
+.app-date-filter__preset:hover {
+  color: var(--charcoal);
+}
+
+.app-date-filter {
+  width: 100%;
+}
+
+.app-date-filter__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.app-date-filter__picker {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 1 auto;
+  min-width: 220px;
+  width: min(420px, 100%);
+}
+
+.app-date-filter__picker-field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.app-date-filter__picker--week {
+  min-width: 300px;
+  width: min(360px, 100%);
+}
+
+.app-date-filter__picker--range {
+  min-width: 320px;
+  width: min(420px, 100%);
+}
+
+.app-date-filter__nav {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Keep Ant picker the same height as prev/next */
+.app-date-filter .app-date-filter__antd.ant-picker,
+.app-date-filter .app-date-filter__antd.ant-picker-range {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding-block: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+.app-date-filter .app-date-filter__antd.ant-picker .ant-picker-input,
+.app-date-filter .app-date-filter__antd.ant-picker-range .ant-picker-input {
+  height: 100%;
+}
+
+.app-date-filter .app-date-filter__antd.ant-picker .ant-picker-input > input,
+.app-date-filter .app-date-filter__antd.ant-picker-range .ant-picker-input > input {
+  height: 100% !important;
+  line-height: 1.2 !important;
+}
+
+.app-date-filter__nav:hover:not(:disabled) {
+  background: var(--lime-tint);
+  border-color: rgba(184, 243, 75, 0.55);
+  color: var(--charcoal);
+}
+
+.app-date-filter__nav:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.app-date-filter__nav svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.app-date-filter--small .app-date-filter__nav {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius);
+}
+
+.app-date-filter--small .app-date-filter__nav svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.app-date-filter--small .app-date-filter__antd.ant-picker,
+.app-date-filter--small .app-date-filter__antd.ant-picker-range {
+  height: 24px !important;
+  min-height: 24px !important;
+}
+
+.app-date-filter--large .app-date-filter__nav {
+  width: 40px;
+  height: 40px;
+}
+
+.app-date-filter--large .app-date-filter__antd.ant-picker,
+.app-date-filter--large .app-date-filter__antd.ant-picker-range {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+.app-date-filter--middle .app-date-filter__all {
+  height: 34px;
+  min-height: 34px;
+}
+
+.app-date-filter--large .app-date-filter__all {
+  height: 40px;
+  min-height: 40px;
+}
+
+.app-date-filter--small .app-date-filter__all {
+  height: 24px;
+  min-height: 24px;
+}
+
+.app-date-filter__all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--lime-tint);
+  color: var(--charcoal);
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1;
+  text-align: center;
+}
+
+.app-date-filter--toolbar {
+  width: auto;
+}
+
+.app-date-filter--toolbar .app-date-filter__row {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+  gap: 0.5rem;
+}
+
+.app-date-filter--toolbar .app-date-filter__picker {
+  width: auto;
+  min-width: 0;
+  flex: 0 1 auto;
+  max-width: none;
+}
+
+.app-date-filter--toolbar .app-date-filter__picker-field {
+  width: 180px;
+  min-width: 160px;
+  max-width: 220px;
+}
+
+.app-date-filter--toolbar .app-date-filter__picker--week .app-date-filter__picker-field {
+  width: 250px;
+  min-width: 220px;
+  max-width: 280px;
+}
+
+.app-date-filter--toolbar .app-date-filter__picker--range .app-date-filter__picker-field {
+  width: 300px;
+  min-width: 260px;
+  max-width: 340px;
+}
+
+.app-date-filter--toolbar .app-date-filter__nav {
+  width: 34px;
+  height: 34px;
+}
+
+.app-date-filter--toolbar .app-date-filter__antd.ant-picker,
+.app-date-filter--toolbar .app-date-filter__antd.ant-picker-range {
+  height: 34px !important;
+  min-height: 34px !important;
+}
+
+.app-date-filter--toolbar .ant-segmented {
+  flex-shrink: 0;
+}

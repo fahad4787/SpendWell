@@ -1,0 +1,148 @@
+.spendwell-logo {
+  --logo-accent: var(--lime);
+  --logo-ink: var(--charcoal);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--charcoal);
+  line-height: 1;
+  user-select: none;
+}
+
+.spendwell-logo--light {
+  color: #f5f5f0;
+  --logo-accent: var(--lime);
+  --logo-ink: #f5f5f0;
+}
+
+.spendwell-logo__mark {
+  display: block;
+  flex: 0 0 auto;
+  height: var(--logo-h, 36px);
+  width: var(--logo-h, 36px);
+  overflow: visible;
+}
+
+.spendwell-logo__plate {
+  fill: var(--charcoal);
+}
+
+.spendwell-logo--brand .spendwell-logo__baseline {
+  stroke: rgba(245, 245, 240, 0.28);
+}
+
+.spendwell-logo--brand .spendwell-logo__bar--1,
+.spendwell-logo--brand .spendwell-logo__bar--2 {
+  fill: rgba(245, 245, 240, 0.55);
+}
+
+.spendwell-logo--brand .spendwell-logo__bar--3 {
+  fill: var(--lime);
+}
+
+.spendwell-logo--brand .spendwell-logo__tip {
+  fill: var(--lime);
+}
+
+.spendwell-logo--light .spendwell-logo__plate {
+  fill: rgba(245, 245, 240, 0.06);
+  stroke: rgba(245, 245, 240, 0.14);
+  stroke-width: 1;
+}
+
+.spendwell-logo--light .spendwell-logo__baseline {
+  stroke: rgba(245, 245, 240, 0.28);
+}
+
+.spendwell-logo--light .spendwell-logo__bar--1,
+.spendwell-logo--light .spendwell-logo__bar--2 {
+  fill: rgba(245, 245, 240, 0.55);
+}
+
+.spendwell-logo--light .spendwell-logo__bar--3 {
+  fill: var(--lime);
+}
+
+.spendwell-logo--light .spendwell-logo__tip {
+  fill: var(--lime);
+}
+
+.spendwell-logo__word {
+  font-family: var(--font-display);
+  font-size: calc(var(--logo-h, 36px) * 0.4);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  color: currentColor;
+}
+
+.spendwell-logo__word span {
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* Grow bars from baseline */
+.spendwell-logo--animated .spendwell-logo__bar {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.spendwell-logo--animated .spendwell-logo__bar--1 {
+  animation: spendwell-bar-grow 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.spendwell-logo--animated .spendwell-logo__bar--2 {
+  animation: spendwell-bar-grow 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.12s infinite;
+}
+
+.spendwell-logo--animated .spendwell-logo__bar--3 {
+  animation: spendwell-bar-grow 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.24s infinite;
+}
+
+.spendwell-logo--animated .spendwell-logo__tip {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spendwell-tip-pulse 2.6s ease-in-out 0.24s infinite;
+}
+
+@keyframes spendwell-bar-grow {
+  0% {
+    transform: scaleY(0.35);
+    opacity: 0.55;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  70%,
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spendwell-tip-pulse {
+  0%,
+  30% {
+    opacity: 0;
+    transform: scale(0.4) translateY(4px);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  70% {
+    opacity: 0.85;
+    transform: scale(1.15) translateY(-1px);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spendwell-logo--animated .spendwell-logo__bar,
+  .spendwell-logo--animated .spendwell-logo__tip {
+    animation: none;
+  }
+}

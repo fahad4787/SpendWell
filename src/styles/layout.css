@@ -1,0 +1,120 @@
+.layout {
+  --sidebar-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --sidebar-duration: 0.4s;
+  min-height: 100vh;
+  overflow-x: clip;
+  color: var(--text);
+  background: var(--off-white);
+}
+
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: 0;
+  z-index: 2000;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--lime);
+  color: var(--charcoal);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-120%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--charcoal);
+  outline-offset: 2px;
+  color: var(--charcoal);
+}
+
+/*
+  Sidebar uses transform (GPU).
+  Main uses margin-left only — width:auto fills the rest, no right overflow.
+*/
+.layout-main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  box-sizing: border-box;
+  width: auto;
+  margin-left: 0;
+  transition: margin-left var(--sidebar-duration) var(--sidebar-ease);
+}
+
+.layout--sidebar-open .layout-main {
+  margin-left: var(--sidebar-width, 212px);
+}
+
+.layout-sidebar-backdrop {
+  display: none;
+}
+
+.content {
+  position: relative;
+  padding: 1.25rem 1.5rem 2rem;
+  min-height: calc(100vh - var(--header-height, 3.75rem));
+  background: transparent;
+  overflow-x: clip;
+}
+
+.content--enter-once {
+  animation: content-enter 0.3s ease both;
+}
+
+.page-pending {
+  min-height: 240px;
+}
+
+@keyframes content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-main,
+  .layout--sidebar-open .layout-main {
+    margin-left: 0;
+  }
+
+  .layout-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 950;
+    border: 0;
+    background: rgba(23, 23, 23, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--sidebar-duration) var(--sidebar-ease);
+  }
+
+  .layout--sidebar-open .layout-sidebar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content--enter-once {
+    animation: none;
+  }
+
+  .layout-main,
+  .layout-sidebar-backdrop {
+    transition: none !important;
+  }
+}
